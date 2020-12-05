@@ -47,9 +47,9 @@ namespace TechJobsConsole
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
+                string aValue = row[column].ToLower();
 
-                if (aValue.Contains(value))
+                if (aValue.Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
@@ -137,6 +137,33 @@ namespace TechJobsConsole
             valueBuilder.Clear();
 
             return rowValues.ToArray();
+        }
+
+        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                foreach (string desc in job.Keys)
+                {
+                    if (job[desc].ToLower().Contains(searchTerm.ToLower()))
+                    {
+                        if (jobs.Contains(job))
+                        {
+
+                        }
+                        else
+                        {
+                            jobs.Add(job);
+                        }
+                    }
+                }
+            }
+
+            return jobs;
         }
     }
 }
